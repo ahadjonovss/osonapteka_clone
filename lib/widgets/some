@@ -1,0 +1,20 @@
+Container(
+                              padding: EdgeInsets.only(left: 8).r,
+                              height: 50.h,
+                              width: 280.w,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8).r
+                              ),
+                              child: Center(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      icon: Icon(Icons.search,size: 28.sp,color: Colors.grey,),
+                                      hintText: "Dori qidirish",
+                                      hintStyle: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 18.sp),
+                                      labelStyle: TextStyle(fontWeight: FontWeight.w700,fontSize: 18.sp)
+                                  ),
+                                ),
+                              ),
+                            )
