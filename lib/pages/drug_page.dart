@@ -60,6 +60,10 @@ class _DrugPageState extends State<DrugPage> {
                         onTap: (){
                             widget.product.count++;
                             my_cart.add(widget.product);
+                            var snackBar = SnackBar(
+                              duration: Duration(milliseconds: 400),
+                                content: Text("${widget.product.name} savatga qo'shildi!"));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                       ),
                       Row(

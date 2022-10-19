@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:osonapteka_app/datas/my_cart.dart';
 import 'package:osonapteka_app/models/drug_model.dart';
 import 'package:osonapteka_app/models/purchase.dart';
 import 'package:osonapteka_app/pages/home_page_1.1.dart';
 import 'package:osonapteka_app/pages/search_page.dart';
+import 'package:osonapteka_app/pages/success_purchase_page.dart';
 
 import 'drug_page.dart';
 
@@ -53,10 +55,10 @@ class _CartPageState extends State<CartPage> {
                 ],
               ),
               Expanded(
-                child: ListView.builder(
+                child: my_cart.isEmpty?Lottie.asset('assets/lotties/cart_empty.json'):ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: my_cart.length,
+                  itemCount: my_cart.length??0,
                     itemBuilder: (context, index) => InkWell(
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DrugPage(product: product,)));
@@ -124,8 +126,17 @@ class _CartPageState extends State<CartPage> {
                                       InkWell(
                                         child: Icon(Icons.remove_circle_outline),
                                         onTap: (){
-                                          if(product.count!=0)
-                                            my_cart.elementAt(index).count--;
+                                          if(my_cart.elementAt(index).count==1){
+                                            setState(() {
+                                              my_cart.remove(my_cart.elementAt(index));
+
+                                            });
+                                          }
+                                          if(my_cart.elementAt(index).count!=0)
+                                            {
+                                              my_cart.elementAt(index).count--;
+                                            }
+
                                           setState(() {});
                                         },
                                       )
@@ -141,81 +152,97 @@ class _CartPageState extends State<CartPage> {
                       ),
                     )),
               ),
-              Container(
-                width: 350.w,
-                padding: EdgeInsets.all(20).r,
-                child: Column(
-                  children: [
-                    Text("To'lov tafsilotlari",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600)),
+              InkWell(
+                onTap: (){
+                  if(my_cart.length>0){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>PurchasePage()));
+                    my_cart.clear();
+                  }
+
+                  else{
+                    var snackBar = SnackBar(
+                        duration: Duration(milliseconds: 800),
+                        content: Text("Xarid qilish uchun mahsulot topilmadi!"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+
+                },
+                child: Container(
+                  width: 350.w,
+                  padding: EdgeInsets.all(20).r,
+                  child: Column(
+                    children: [
+                      Text("To'lov tafsilotlari",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600)),
+                        SizedBox(height: 12.h,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Umumiy narx:",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                            Text("${widget.myData.getcost()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+
+
+                          ],
+                        ),
                       SizedBox(height: 12.h,),
-                      Row(
+                        Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Umumiy narx:",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                          Text("${widget.myData.getcost()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                          Text("Chegirma::",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                          Text("${widget.myData.getDiscount()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
                         ],
                       ),
-                    SizedBox(height: 12.h,),
+                      SizedBox(height: 12.h,),
                       Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Chegirma::",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("${widget.myData.getDiscount()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Promo kod chegirmasi",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                          Text("${widget.myData.promo_code} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
-                      ],
-                    ),
-                    SizedBox(height: 12.h,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Promo kod chegirmasi",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("${widget.myData.promo_code} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-
-
-                      ],
-                    ),
-                    SizedBox(height: 12.h,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Xizmat ko'rsatish",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("${widget.myData.service} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-
-
-                      ],
-                    ),
-                    SizedBox(height: 12.h,),
-                    Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-
-                    ),
-                    SizedBox(height: 12.h,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Umumiy",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600),),
-                        Text("${widget.myData.getAllCost()} so'm",style: TextStyle(color: Colors.black,fontSize: 19.sp,fontWeight: FontWeight.w600),),
-
-
-                      ],
-                    ),
-                    SizedBox(height: 20.h,),
-                    Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20).r,
+                        ],
                       ),
-                      child: Center(
-                        child: Text("Xarid qilish",style: TextStyle(color: Colors.
-                            white,fontSize: 19.sp,fontWeight: FontWeight.w600),),
+                      SizedBox(height: 12.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Xizmat ko'rsatish",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                          Text("${widget.myData.service} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+
+
+                        ],
                       ),
-                    )
-                  ],
+                      SizedBox(height: 12.h,),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 1,
+
+                      ),
+                      SizedBox(height: 12.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Umumiy",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600),),
+                          Text("${widget.myData.getAllCost()} so'm",style: TextStyle(color: Colors.black,fontSize: 19.sp,fontWeight: FontWeight.w600),),
+
+
+                        ],
+                      ),
+                      SizedBox(height: 20.h,),
+                      Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20).r,
+                        ),
+                        child: Center(
+                          child: Text("Xarid qilish",style: TextStyle(color: Colors.
+                              white,fontSize: 19.sp,fontWeight: FontWeight.w600),),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ), //oplata
             ],

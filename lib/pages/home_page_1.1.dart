@@ -98,14 +98,17 @@ class _HomePageState extends State<HomePage> {
                                       )
                                   ),
                                 ),
-                                Container(
-                                  height: 50.h,
-                                  width: 50.w,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8).r
+                                InkWell(
+                                  child: Container(
+                                    height: 50.h,
+                                    width: 50.w,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8).r
+                                    ),
+                                    child: Icon(Icons.shopping_cart,size: 32.sp,color: Colors.grey,),
                                   ),
-                                  child: Icon(Icons.qr_code,size: 32.sp,color: Colors.grey,),
+                                    onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>CartPage()))
                                 )
                               ],
                             )

@@ -12,7 +12,7 @@ class Drugs {
   String imageUrl;
   num price;
   num quantity;
-  int count=1;
+  int count=0;
 
   Drugs(
       {required this.name,
