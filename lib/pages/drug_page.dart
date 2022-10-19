@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:osonapteka_app/datas/my_cart.dart';
 
 import '../models/drug_model.dart';
 
@@ -51,10 +52,24 @@ class _DrugPageState extends State<DrugPage> {
                 SizedBox(height: 20.h,),
                 Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.
+                    spaceBetween,
                     children: [
-                      Text("${widget.product.price}so'm",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue),),
-                      Text("  dan")
+                      InkWell(
+                          child: Text("Savatga qo'shish+",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue)),
+                        onTap: (){
+                            widget.product.count++;
+                            my_cart.add(widget.product);
+                        },
+                      ),
+                      Row(
+                        children: [
+                          Text("${widget.product.price}so'm",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue),),
+                          Text("  dan")
+
+                        ],
+                      )
+
                     ],
                   ),
                 ),

@@ -6,7 +6,7 @@ import 'package:osonapteka_app/pages/drug_page.dart';
 
 import '../utils/project_images.dart';
 
-Widget drug_cart(BuildContext context,Drugs product){
+Widget drug_cart(BuildContext context,Drugs product,void setstate){
   return InkWell(
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context)=>DrugPage(product: product,)));
@@ -56,9 +56,22 @@ Widget drug_cart(BuildContext context,Drugs product){
                 Icon(Icons.cancel,color: Colors.grey,),
                 Row(
                   children: [
-                    Icon(Icons.add_circle_outline),
-                    Text("son"),
-                    Icon(Icons.remove_circle_outline)
+                    InkWell(
+                        child: Icon(Icons.add_circle_outline),
+                      onTap: (){
+                          product.count++;
+                          setstate;
+                      },
+                    ),
+                    Text("${product.count}"),
+                    InkWell(
+                        child: Icon(Icons.remove_circle_outline),
+                      onTap: (){
+                          if(product.count!=0)
+                            product.count--;
+                          setstate;
+                      },
+                    )
 
                   ],
                 )

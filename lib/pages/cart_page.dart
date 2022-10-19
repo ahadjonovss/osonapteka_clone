@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osonapteka_app/datas/my_cart.dart';
 import 'package:osonapteka_app/models/drug_model.dart';
-import 'package:osonapteka_app/widgets/drug_buy_widget.dart';
-import 'package:osonapteka_app/widgets/drug_widget.dart';
+import 'package:osonapteka_app/models/purchase.dart';
+import 'package:osonapteka_app/pages/home_page_1.1.dart';
+import 'package:osonapteka_app/pages/search_page.dart';
+
+import 'drug_page.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  Purchase myData=Purchase(my_cart);
+   CartPage({Key? key}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
 }
 
+
+
 class _CartPageState extends State<CartPage> {
  Drugs product=Drugs(name: "name", price: 2300, description: "description", id: 1, imageUrl: "https://source.unsplash.com/random", quantity: 200);
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,14 +40,107 @@ class _CartPageState extends State<CartPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tanlangan dorilar soni: 2",
+                  Text("Tanlangan dorilar soni: ${my_cart.length}",
             style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),
         ),
-                  Text("Yana qo'shish+",style: TextStyle(color: Colors.blue,fontSize: 16.sp,fontWeight: FontWeight.w600),
-        )
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                    },
+                    child: Text("Yana qo'shish+",style: TextStyle(color: Colors.blue,fontSize: 16.sp,fontWeight: FontWeight.w600),
+        ),
+                  )
                 ],
               ),
-              drug_cart(context, product),
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: my_cart.length,
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>DrugPage(product: product,)));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 16),
+                        padding: EdgeInsets.all(10).r,
+                        height:90.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8).r,
+                            color: Colors.grey.withOpacity(0.10)
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 70.h,
+                              width: 70.w,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8).r,
+                                  image: DecorationImage(
+                                      image: NetworkImage(my_cart.elementAt(index).imageUrl),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(my_cart.elementAt(index).name,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
+                                  Text("${my_cart.elementAt(index).quantity}",style: TextStyle(fontWeight: FontWeight.w300,fontSize: 16),),
+                                  Row(
+                                    children: [
+                                      Text("${my_cart.elementAt(index).price}so'm",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue),),
+                                      Text("  dan")
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                      child: Icon(Icons.cancel,color: Colors.grey,),
+                                    onTap: (){
+                                        my_cart.remove(my_cart.elementAt(index));
+                                        setState(() {});
+                                    },
+                                  ),
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        child: Icon(Icons.add_circle_outline),
+                                        onTap: (){
+                                          my_cart.elementAt(index).count++;
+                                          setState(() {});
+                                        },
+                                      ),
+                                      Text("${my_cart.elementAt(index).count}"),
+                                      InkWell(
+                                        child: Icon(Icons.remove_circle_outline),
+                                        onTap: (){
+                                          if(product.count!=0)
+                                            my_cart.elementAt(index).count--;
+                                          setState(() {});
+                                        },
+                                      )
+
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+
+                      ),
+                    )),
+              ),
               Container(
                 width: 350.w,
                 padding: EdgeInsets.all(20).r,
@@ -52,7 +152,7 @@ class _CartPageState extends State<CartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Umumiy narx:",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                          Text("1234355 so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                          Text("${widget.myData.getcost()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
                         ],
@@ -62,7 +162,7 @@ class _CartPageState extends State<CartPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Chegirma::",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("1234355 so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                        Text("${widget.myData.getDiscount()} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
                       ],
@@ -72,7 +172,7 @@ class _CartPageState extends State<CartPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Promo kod chegirmasi",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("1234355 so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                        Text("${widget.myData.promo_code} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
                       ],
@@ -82,7 +182,7 @@ class _CartPageState extends State<CartPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("Xizmat ko'rsatish",style: TextStyle(color: Colors.grey,fontSize: 16.sp,fontWeight: FontWeight.w600),),
-                        Text("1234355 so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                        Text("${widget.myData.service} so'm",style: TextStyle(color: Colors.black,fontSize: 16.sp,fontWeight: FontWeight.w600),),
 
 
                       ],
@@ -97,8 +197,8 @@ class _CartPageState extends State<CartPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Xizmat ko'rsatish",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600),),
-                        Text("1234355 so'm",style: TextStyle(color: Colors.black,fontSize: 19.sp,fontWeight: FontWeight.w600),),
+                        Text("Umumiy",style: TextStyle(color: Colors.black,fontSize: 18.sp,fontWeight: FontWeight.w600),),
+                        Text("${widget.myData.getAllCost()} so'm",style: TextStyle(color: Colors.black,fontSize: 19.sp,fontWeight: FontWeight.w600),),
 
 
                       ],
@@ -124,4 +224,81 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+}
+
+Widget drug_cart(BuildContext context,Drugs product,){
+  return InkWell(
+    onTap: (){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>DrugPage(product: product,)));
+    },
+    child: Container(
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(10).r,
+      height:90.h,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8).r,
+          color: Colors.grey.withOpacity(0.10)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 70.h,
+            width: 70.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8).r,
+                image: DecorationImage(
+                    image: NetworkImage(product.imageUrl),
+                    fit: BoxFit.cover
+                )
+            ),
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(product.name,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 18),),
+                Text("${product.quantity}",style: TextStyle(fontWeight: FontWeight.w300,fontSize: 16),),
+                Row(
+                  children: [
+                    Text("${product.price}so'm",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.blue),),
+                    Text("  dan")
+                  ],
+                )
+              ],
+            ),
+          ),
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(Icons.cancel,color: Colors.grey,),
+                Row(
+                  children: [
+                    InkWell(
+                      child: Icon(Icons.add_circle_outline),
+                      onTap: (){
+                        product.count++;
+                      },
+                    ),
+                    Text("${product.count}"),
+                    InkWell(
+                      child: Icon(Icons.remove_circle_outline),
+                      onTap: (){
+                        if(product.count!=0)
+                          product.count--;
+                      },
+                    )
+
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+
+    ),
+  );
 }
