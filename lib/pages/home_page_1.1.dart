@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:osonapteka_app/pages/cart_page.dart';
 import 'package:osonapteka_app/pages/search_page.dart';
 import 'package:osonapteka_app/widgets/drug_widget.dart';
 
@@ -64,10 +65,11 @@ class _HomePageState extends State<HomePage> {
                             ), //Qidiruvni boshlash
                             SizedBox(height: 12.h,),
                             InkWell(
-                              onTap: ()=>Navigator.pop(context),
+                              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>CartPage())),
                               child: Row(
                                 children:  [
-                                  Text("Tumanni tanlash", style: TextStyle(color: Colors.white,fontSize: 16.sp,fontWeight: FontWeight.w600),),
+                                  Text("Tumanni tanlash",
+                                    style: TextStyle(color: Colors.white,fontSize: 16.sp,fontWeight: FontWeight.w600),),
                                   Icon(Icons.navigate_next,color: Colors.white,size: 20.sp,)
                                 ],
                               ),
