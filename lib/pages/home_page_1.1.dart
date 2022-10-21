@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:osonapteka_app/pages/add_product.dart';
 import 'package:osonapteka_app/pages/cart_page.dart';
 import 'package:osonapteka_app/pages/search_page.dart';
 import 'package:osonapteka_app/widgets/drug_widget.dart';
@@ -37,7 +38,23 @@ class _HomePageState extends State<HomePage> {
     return  Scaffold(
       key: _key,
       backgroundColor: Colors.blue,
-      endDrawer: Drawer(),
+      endDrawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              padding: EdgeInsets.all(0),
+                child: Container(color: Colors.grey,)),
+            ListTile(
+              title: Text("Admin sahifa"),
+              leading: Icon(Icons.admin_panel_settings),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>AdminPage()));
+              },
+            )
+          ],
+        ),
+        
+      ),
       body: FutureBuilder(
         future: getData(),
         builder: (context, snapshot) {
@@ -131,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                   physics: BouncingScrollPhysics(),
                                   shrinkWrap: true,
                                   itemCount: all_drugs?.length??0,
-                                  itemBuilder: (context, index) => drug(context,all_drugs![index]),),
+                                  itemBuilder: (context, index) => drug(context,all_drugs![index],index),),
                               )
                             ],
                           ),

@@ -6,7 +6,7 @@ class Drugs {
 // // "price": 5000,
 // // "quantity": 300
 
-  int id;
+  int? id;
   String name;
   String description;
   String imageUrl;
@@ -16,9 +16,9 @@ class Drugs {
 
   Drugs(
       {required this.name,
+        this.id,
         required this.price,
         required this.description,
-        required this.id,
         required this.imageUrl,
         required this.quantity});
 
@@ -33,7 +33,15 @@ class Drugs {
 
     return Drugs(name: name, price: price, description: description, id: id, imageUrl: imageUrl, quantity: quantity);
 
-
   }
-//
+
+
+  static Map<String, dynamic> DrugsToJson(Drugs instance) => <String, dynamic>{
+    'Name': instance.name,
+    'Description': instance.description,
+    'ImageUrl': instance.imageUrl,
+    'price': instance.price,
+    'quantity': instance.quantity,
+  };
+
 }

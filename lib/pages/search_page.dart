@@ -71,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: ListView.builder(
                   itemCount: widget.searched!.length,
                   shrinkWrap: true,
-                    itemBuilder: (context, index) =>drug(context, widget.searched![index]),),
+                    itemBuilder: (context, index) =>drug(context, widget.searched![index],index)),
               )
             ],
           ),

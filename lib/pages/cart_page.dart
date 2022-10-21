@@ -21,7 +21,7 @@ class CartPage extends StatefulWidget {
 
 
 class _CartPageState extends State<CartPage> {
- Drugs product=Drugs(name: "name", price: 2300, description: "description", id: 1, imageUrl: "https://source.unsplash.com/random", quantity: 200);
+ Drugs product=Drugs(name: "name", price: 2300, description: "description", imageUrl: "https://source.unsplash.com/random", quantity: 200);
 
  @override
   Widget build(BuildContext context) {
