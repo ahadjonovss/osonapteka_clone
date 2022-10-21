@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osonapteka_app/pages/onboarding.dart';
 import 'package:osonapteka_app/pages/splash_screen_1.1.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: SplashScreen(),
+            home: Onboarding(),
           );
         });
   }
