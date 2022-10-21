@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:osonapteka_app/datas/onboardings.dart';
+import 'package:osonapteka_app/datas/shared_preference.dart';
 import 'package:osonapteka_app/pages/home_page_1.1.dart';
 import 'package:osonapteka_app/widgets/advert_widget.dart';
 
 class Onboarding extends StatefulWidget {
    Onboarding({Key? key}) : super(key: key);
   int currentPage=0;
-  PageController pg_controller=PageController();
 
   @override
   State<Onboarding> createState() => _OnboardingState();
@@ -28,8 +28,6 @@ class _OnboardingState extends State<Onboarding> {
                 width: 400.w,
                 child: PageView.builder(
                   physics: BouncingScrollPhysics(),
-                  pageSnapping: true,
-                  controller: controller,
                   itemCount: 3,
                   onPageChanged: (val){
                     widget.currentPage=val;
@@ -60,6 +58,7 @@ class _OnboardingState extends State<Onboarding> {
                     InkWell(
                       onTap: (){
                         if(widget.currentPage==2){
+                          StorageRepository.saveBool("Login", true);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomePage()));
                         }
                         if(widget.currentPage!=2)

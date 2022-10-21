@@ -3,7 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:osonapteka_app/pages/onboarding.dart';
 import 'package:osonapteka_app/pages/splash_screen_1.1.dart';
 
+import 'datas/shared_preference.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  StorageRepository.getInstance();
   runApp(const MyApp());
 }
 
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: Onboarding(),
+            home: SplashScreen(),
           );
         });
   }
