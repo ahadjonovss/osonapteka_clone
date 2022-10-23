@@ -45,7 +45,12 @@ class _OnboardingState extends State<Onboarding> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Skip",style: TextStyle(color: Colors.grey,fontSize: 18),),
+                    InkWell(
+                        child: Text("Skip",style: TextStyle(color: Colors.grey,fontSize: 18),),
+                    onTap: (){
+                      StorageRepository.saveBool("Login", true);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomePage()));
+                    },),
                     DotsIndicator(
                         dotsCount: 3,
                       position: widget.currentPage.toDouble(),

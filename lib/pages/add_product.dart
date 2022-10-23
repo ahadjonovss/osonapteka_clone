@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:osonapteka_app/models/drug_model.dart';
 import 'package:osonapteka_app/pages/success_purchase_page.dart';
+import 'package:osonapteka_app/pages/uploaded.dart';
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -105,7 +106,7 @@ class _AdminPageState extends State<AdminPage> {
     var response= await Dio().post(url,data: Drugs.DrugsToJson(medicine));
 
     if(response.statusCode==200){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>PurchasePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>Uploaded()));
     }
 
 

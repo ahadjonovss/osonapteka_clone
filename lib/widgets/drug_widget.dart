@@ -2,19 +2,22 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:osonapteka_app/models/drug_model.dart';
 import 'package:osonapteka_app/pages/drug_page.dart';
 import 'package:osonapteka_app/pages/home_page_1.1.dart';
 
 import '../utils/project_images.dart';
 
-Widget drug(BuildContext context,Drugs product,int indec){
+Widget drug(BuildContext context,Drugs product,int? indec,bool isAdmin){
   return Dismissible(
-    key: Key(indec.toString()),
-    direction: DismissDirection.horizontal,
+    key: UniqueKey(),
+    direction: isAdmin?DismissDirection.horizontal:DismissDirection.none,
     onDismissed: (v){
-      deletethis(indec);
+      if(isAdmin==true)
+      deletethis(indec??0);
     },
+    background: Lottie.asset('assets/lotties/deleted.json'),
     child: InkWell(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context)=>DrugPage(product: product,)));
