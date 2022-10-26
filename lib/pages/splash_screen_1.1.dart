@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:osonapteka_app/datas/shared_preference.dart';
 import 'package:osonapteka_app/pages/home_page_1.1.dart';
 import 'package:osonapteka_app/pages/onboarding.dart';
+import 'package:osonapteka_app/pages/welcome_page.dart';
+import 'package:osonapteka_app/routes/routes.dart';
 
 import '../utils/project_images.dart';
 
@@ -12,7 +14,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 4)).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context)=>StorageRepository.getBool("Login")?HomePage():Onboarding())));
+    Future.delayed(Duration(seconds: 4)).then((value) => Navigator.pushReplacementNamed(context, StorageRepository.getString('Login')==true?RouteName.home:RouteName.onboard));
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

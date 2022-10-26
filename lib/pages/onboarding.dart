@@ -5,6 +5,8 @@ import 'package:lottie/lottie.dart';
 import 'package:osonapteka_app/datas/onboardings.dart';
 import 'package:osonapteka_app/datas/shared_preference.dart';
 import 'package:osonapteka_app/pages/home_page_1.1.dart';
+import 'package:osonapteka_app/pages/welcome_page.dart';
+import 'package:osonapteka_app/routes/routes.dart';
 import 'package:osonapteka_app/widgets/advert_widget.dart';
 
 class Onboarding extends StatefulWidget {
@@ -49,7 +51,7 @@ class _OnboardingState extends State<Onboarding> {
                         child: Text("Skip",style: TextStyle(color: Colors.grey,fontSize: 18),),
                     onTap: (){
                       StorageRepository.saveBool("Login", true);
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomePage()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>WelcomePage()));
                     },),
                     DotsIndicator(
                         dotsCount: 3,
@@ -64,7 +66,7 @@ class _OnboardingState extends State<Onboarding> {
                       onTap: (){
                         if(widget.currentPage==2){
                           StorageRepository.saveBool("Login", true);
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>HomePage()));
+                          Navigator.pushReplacementNamed(context, RouteName.welcomepage);
                         }
                         if(widget.currentPage!=2)
                         widget.currentPage++;
@@ -72,7 +74,7 @@ class _OnboardingState extends State<Onboarding> {
 
                         });
                       },
-                        child: Text("Next",style: TextStyle(color: Colors.blue,fontSize: 18)))
+                        child: Text(widget.currentPage==2?"Done":"Next",style: TextStyle(color: Colors.blue,fontSize: 18)))
                   ],
                 ),
               )

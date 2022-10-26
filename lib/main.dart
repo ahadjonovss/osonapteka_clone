@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:osonapteka_app/pages/loginPage.dart';
 import 'package:osonapteka_app/pages/onboarding.dart';
 import 'package:osonapteka_app/pages/splash_screen_1.1.dart';
+import 'package:osonapteka_app/routes/routes.dart';
 
 import 'datas/shared_preference.dart';
 
@@ -24,12 +26,13 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
+            onGenerateRoute: AppRoutes.generateRoute,
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            home: SplashScreen(),
+            home: const SplashScreen(),
           );
         });
   }

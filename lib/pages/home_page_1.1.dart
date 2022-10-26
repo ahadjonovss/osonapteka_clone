@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    String name=StorageRepository.getString('name');
     return  RefreshIndicator(
       onRefresh: ()async{
         getData();
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                                   onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (_)=>CartPage())),
                                   child: Row(
                                     children:  [
-                                      Text("Tumanni tanlash",
+                                      Text("Salom ${name}",
                                         style: TextStyle(color: Colors.white,fontSize: 16.sp,fontWeight: FontWeight.w600),),
                                       Icon(Icons.navigate_next,color: Colors.white,size: 20.sp,)
                                     ],

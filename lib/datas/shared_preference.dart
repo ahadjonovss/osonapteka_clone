@@ -30,6 +30,11 @@ class StorageRepository {
     return _sharedPreferences!.setBool(key, value);
   }
 
+  static Future<bool>? saveString(String key, String value) {
+    if (_sharedPreferences == null) return null;
+    return _sharedPreferences!.setString(key, value);
+  }
+
   static int getInt(String key) {
     if (_sharedPreferences == null) return 0;
     return _sharedPreferences!.getInt(key) ?? 0;
@@ -38,6 +43,11 @@ class StorageRepository {
   static bool getBool(String key) {
     if (_sharedPreferences == null) return false;
     return _sharedPreferences!.getBool(key) ?? false;
+  }
+
+  static String getString(String key) {
+    if (_sharedPreferences == null) return 'No name';
+    return _sharedPreferences!.getString(key) ?? "No name";
   }
 
 
